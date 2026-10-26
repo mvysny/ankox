@@ -1,6 +1,12 @@
 plugins {
     base
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
+    id("org.jetbrains.kotlinx.kover")
+}
+
+dependencies {
+    // The coverage report of every module, in the root's `koverHtmlReport`.
+    subprojects.forEach { kover(it) }
 }
 
 defaultTasks("clean", "build")

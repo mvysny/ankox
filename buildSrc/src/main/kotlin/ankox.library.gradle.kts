@@ -1,11 +1,13 @@
 // What every Ankox module shares: an Android library at minSdk 21, published under the module's
 // name. A module adds its namespace, its description and its one AndroidX dependency.
+import com.android.build.api.variant.HostTestBuilder
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.library")
     `maven-publish`
     signing
+    id("org.jetbrains.kotlinx.kover")
 }
 
 group = rootProject.group
@@ -28,6 +30,11 @@ android {
         disable += "GradleDependency"
     }
 
+    testOptions {
+        // Robolectric needs the merged resources: Material's themes, the module's own R.
+        unitTests.isIncludeAndroidResources = true
+    }
+
     publishing {
         singleVariant("release") {
             withSourcesJar()
@@ -36,10 +43,31 @@ android {
     }
 }
 
+// AGP 9's `android.sourceSets` accessor is typed by its old API, and fails a cast.
+configure<com.android.build.api.dsl.LibraryExtension> {
+    sourceSets.getByName("test").resources.directories.add(rootDir.resolve("buildSrc/src/robolectric").path)
+}
+
+androidComponents {
+    // Release compiles the same code as debug: its unit tests would only run them all twice,
+    // in `build` and in Kover's report alike.
+    beforeVariants(selector().withBuildType("release")) {
+        it.hostTests[HostTestBuilder.UNIT_TEST_TYPE]?.enable = false
+    }
+}
+
 kotlin {
     compilerOptions {
         jvmTarget = JvmTarget.JVM_17
     }
+}
+
+dependencies {
+    // Robolectric runs the Android framework on the JVM: unit tests, no emulator. 4.15 is the
+    // last to run our minSdk 21; 4.16 dropped it.
+    "testImplementation"("junit:junit:4.13.2")
+    "testImplementation"("org.jetbrains.kotlin:kotlin-test-junit")
+    "testImplementation"("org.robolectric:robolectric:4.15.1")
 }
 
 publishing {
