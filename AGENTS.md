@@ -52,7 +52,6 @@ Every fact lives in exactly one of these; the others link to it.
 
 ## Commands
 
-- **Run Gradle through `mise exec -- ./gradlew …`**: `mise.toml` pins JetBrains JDK 17.
 - `./gradlew` — `clean build`: compile, lint, unit tests, then `design/verify_design_tripwires.sh` via `check`; what CI runs on push on JDK 17 (`.github/workflows/gradle.yml`).
 - `./gradlew :koverHtmlReport` — the coverage of every module, in `build/reports/kover/html`.
 - `./gradlew publishToMavenLocal` — install every module's snapshot into `~/.m2` for the apps to try.
