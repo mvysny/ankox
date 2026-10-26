@@ -38,4 +38,7 @@ Anko split the same way, so an app swaps its dependency lines one for one. Why n
 with `compileOnly` libraries: a forgotten library then fails at runtime, inside an inlined body,
 or in R8's missing-class check unless we ship `-dontwarn` rules; the POM no longer tells the app
 what it needs; and the compile-time floor stays anyway. The cost we carry: a module per library
-and five artifacts per release, which `buildSrc`'s convention plugin keeps to a few lines each.
+and five artifacts per release, which `buildSrc`'s convention plugin keeps to a few lines each;
+and Anko's `support.v4` package spread over three modules, so a JVM file name two of them would
+both ship stays Anko's in one and gets a name of its own in the other — a Kotlin caller never
+sees it, a Java caller of that one class does.

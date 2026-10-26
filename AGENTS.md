@@ -31,12 +31,14 @@ Every fact lives in exactly one of these; the others link to it.
 
 - **Every declaration keeps Anko's package, name, signature and `@file:JvmName`.** A rename breaks the apps' sources, and a JVM name breaks their Java callers (`DimensionsKt`). See `D_anko_fork`.
 - **The core module `ankox` depends on no AndroidX library at runtime**; one that needs a library goes to that library's module. See `D_module_per_dependency`.
+- **A module's namespace is `org.jetbrains.anko.generated.<name>`, as Anko's were, never a package Anko declares in**: the app sees every library's `R`, and one in `org.jetbrains.anko` clashes with the app's own under `import org.jetbrains.anko.*`.
+- **Two modules never ship one class**, as two top-level-function files under one `@file:JvmName` would: the app fails on the duplicate. `verifyNoDuplicateClasses` in `check` fails on it; the newer file takes a name of its own. See `D_module_per_dependency`.
 - **A dependency's version is the lowest that compiles and supports minSdk 21.** A newer one forces every app up; this build doesn't check minSdk, the app's manifest merger does.
 
 ## Module map
 
 - `ankox` — `org.jetbrains.anko` (commons, the framework-widget DSL of `anko-sdk15`), `.sdk15.listeners`, `.custom`, `.internals`.
-- `ankox-recyclerview`, `ankox-cardview`, `ankox-viewpager`, `ankox-design` — one per AndroidX library, in the packages of the Anko modules they replace.
+- `ankox-recyclerview`, `ankox-cardview`, `ankox-viewpager`, `ankox-drawerlayout`, `ankox-swiperefreshlayout`, `ankox-design` — one per AndroidX library, in the packages of the Anko modules they replace.
 - `buildSrc` — `ankox.library`, the convention plugin every module applies: Android setup and publishing.
 
 ## Conventions
