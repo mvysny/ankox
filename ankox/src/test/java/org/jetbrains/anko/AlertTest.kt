@@ -100,6 +100,17 @@ class AlertTest {
     }
 
     @Test
+    fun selector() {
+        var selected: Int? = null
+        activity.selector("title", listOf("a", "b")) { _, index -> selected = index }
+        val dialog = ShadowAlertDialog.getLatestAlertDialog()
+        assertEquals("title", dialog.title())
+        assertEquals(listOf("a", "b"), shadowOf(dialog).items.map { it.toString() })
+        shadowOf(dialog).clickOnItem(1)
+        assertEquals(1, selected)
+    }
+
+    @Test
     fun customView() {
         val dialog = activity.alert {
             customView { textView("custom") }

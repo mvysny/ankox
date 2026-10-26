@@ -5,7 +5,7 @@ plugins {
 description = "Anko's RecyclerView DSL on AndroidX: replaces anko-recyclerview-v7"
 
 android {
-    namespace = "org.jetbrains.anko.recyclerview.v7"
+    namespace = "org.jetbrains.anko.generated.recyclerviewV7"
 }
 
 dependencies {

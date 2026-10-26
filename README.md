@@ -27,6 +27,8 @@ dependencies with their Ankox modules, all of the same version, e.g.
 | `anko-recyclerview-v7` | `ankox-recyclerview` | `androidx.recyclerview:recyclerview` 1.0.0+ |
 | `anko-cardview-v7` | `ankox-cardview` | `androidx.cardview:cardview` 1.0.0+ |
 | `anko-support-v4` (only its `ViewPager` DSL) | `ankox-viewpager` | `androidx.viewpager:viewpager` 1.0.0+ |
+| `anko-support-v4` (only `_DrawerLayout`) | `ankox-drawerlayout` | `androidx.drawerlayout:drawerlayout` 1.0.0+ |
+| `anko-support-v4` (only `SwipeRefreshLayout.onRefresh`) | `ankox-swiperefreshlayout` | `androidx.swiperefreshlayout:swiperefreshlayout` 1.0.0+ |
 | `anko-design` (only `snackbar()`) | `ankox-design` | `com.google.android.material:material` 1.0.0+ |
 
 Each module depends on `ankox`. The original Anko artifacts must all go, since they hold the

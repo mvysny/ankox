@@ -5,8 +5,7 @@ plugins {
 description = "Anko's commons and framework-widget DSL on AndroidX: replaces anko-commons, anko-sdk15 and anko-sdk15-listeners"
 
 android {
-    // Anko's own package, so that R and BuildConfig land where Anko's sources expect them.
-    namespace = "org.jetbrains.anko"
+    namespace = "org.jetbrains.anko.generated.commons"
 }
 
 dependencies {

@@ -10,6 +10,10 @@ package org.jetbrains.anko
 import android.content.Context
 import android.content.res.Configuration
 
+@Deprecated(message = "Inline", replaceWith = ReplaceWith("this"))
+inline val Context.ctx: Context
+    get() = this
+
 inline val Context.displayMetrics: android.util.DisplayMetrics
     get() = resources.displayMetrics
 
@@ -21,3 +25,6 @@ inline val AnkoContext<*>.displayMetrics: android.util.DisplayMetrics
 
 inline val AnkoContext<*>.configuration: Configuration
     get() = ctx.resources.configuration
+
+inline val Configuration.landscape: Boolean
+    get() = orientation == Configuration.ORIENTATION_LANDSCAPE

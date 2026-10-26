@@ -1,6 +1,8 @@
 package org.jetbrains.anko
 
 import android.app.Application
+import android.content.Context
+import android.content.res.Configuration
 import android.text.Spanned
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
@@ -13,7 +15,10 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
+import kotlin.test.assertSame
+import kotlin.test.assertTrue
 
 @RunWith(RobolectricTestRunner::class)
 class MiscTest {
@@ -53,5 +58,29 @@ class MiscTest {
         assertNotNull(app.activityManager)
         assertNotNull(app.notificationManager)
         assertNotNull(app.windowManager)
+        assertNotNull(app.layoutInflater)
+    }
+
+    @Test
+    fun childrenSequence() {
+        lateinit var children: List<android.view.View>
+        val layout = app.verticalLayout {
+            children = listOf(textView(), button())
+        }
+        @Suppress("DEPRECATION")
+        assertEquals(children, layout.childrenSequence().toList())
+        @Suppress("DEPRECATION")
+        assertEquals(emptyList(), children[0].childrenSequence().toList())
+    }
+
+    @Test
+    fun configuration() {
+        val config = Configuration()
+        config.orientation = Configuration.ORIENTATION_LANDSCAPE
+        assertTrue(config.landscape)
+        config.orientation = Configuration.ORIENTATION_PORTRAIT
+        assertFalse(config.landscape)
+        @Suppress("DEPRECATION")
+        assertSame<Context>(app, app.ctx)
     }
 }

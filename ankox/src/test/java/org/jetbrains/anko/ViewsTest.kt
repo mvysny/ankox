@@ -3,11 +3,17 @@ package org.jetbrains.anko
 import android.app.Application
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.ContextThemeWrapper
 import android.webkit.WebView
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ExpandableListView
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.RadioButton
+import android.widget.Spinner
 import android.widget.TextView
 import org.jetbrains.anko.sdk15.listeners.onClick
 import org.jetbrains.anko.sdk15.listeners.onFocusChange
@@ -43,6 +49,44 @@ class ViewsTest {
         val types = (0 until layout.childCount).map { layout.getChildAt(it).javaClass }
         assertEquals(listOf(android.view.View::class.java, TextView::class.java, Button::class.java,
             EditText::class.java, ImageView::class.java, ProgressBar::class.java, WebView::class.java), types)
+    }
+
+    @Test
+    fun moreViewsAreAddedToTheirParent() {
+        val layout = app.verticalLayout {
+            imageButton()
+            spinner()
+            radioButton()
+            autoCompleteTextView()
+            expandableListView()
+        }
+        val types = (0 until layout.childCount).map { layout.getChildAt(it).javaClass }
+        assertEquals(listOf(ImageButton::class.java, Spinner::class.java, RadioButton::class.java,
+            AutoCompleteTextView::class.java, ExpandableListView::class.java), types)
+    }
+
+    @Test
+    fun imageButtonDrawables() {
+        val drawable = ColorDrawable(Color.RED)
+        lateinit var buttons: List<ImageButton>
+        app.verticalLayout {
+            buttons = listOf(imageButton(drawable), imageButton(android.R.drawable.ic_delete) {})
+        }
+        assertSame(drawable, buttons[0].drawable)
+        assertEquals(android.R.drawable.ic_delete, shadowOf(buttons[1].drawable).createdFromResId)
+    }
+
+    @Test
+    fun themedTextViewWrapsTheContext() {
+        lateinit var views: List<TextView>
+        app.verticalLayout {
+            views = listOf(
+                themedTextView(android.R.style.Theme_Black) { text = "a" },
+                themedTextView("b", android.R.style.Theme_Black),
+            )
+        }
+        assertEquals(listOf("a", "b"), views.map { it.text.toString() })
+        views.forEach { assertIs<ContextThemeWrapper>(it.context) }
     }
 
     @Test

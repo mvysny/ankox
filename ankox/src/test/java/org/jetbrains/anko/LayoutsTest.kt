@@ -6,6 +6,10 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.TableLayout
+import android.widget.TableRow
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -103,6 +107,33 @@ class LayoutsTest {
         }
         assertIs<FrameLayout.LayoutParams>(lp)
         assertEquals(1, switcher.childCount)
+    }
+
+    @Test
+    fun tableLayoutNestsRows() {
+        lateinit var row: TableRow
+        lateinit var rowLp: ViewGroup.LayoutParams
+        lateinit var cellLp: ViewGroup.LayoutParams
+        val table = app.tableLayout {
+            row = tableRow {
+                cellLp = textView("a").lparams(column = 2).layoutParams
+            }
+            rowLp = row.lparams(matchParent, wrapContent).layoutParams
+        }
+        assertIs<TableLayout>(table)
+        assertSame(row, table.getChildAt(0))
+        assertIs<TableLayout.LayoutParams>(rowLp)
+        assertEquals(ViewGroup.LayoutParams.MATCH_PARENT, rowLp.width)
+        assertIs<TableRow.LayoutParams>(cellLp)
+        assertEquals(2, cellLp.column)
+    }
+
+    @Test
+    fun radioGroupParams() {
+        val group = _RadioGroup(app)
+        val lp = with(group) { RadioButton(app).lparams(matchParent, wrapContent).layoutParams }
+        assertIs<RadioGroup.LayoutParams>(lp)
+        assertEquals(ViewGroup.LayoutParams.MATCH_PARENT, lp.width)
     }
 
     @Test

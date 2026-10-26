@@ -5,7 +5,7 @@ plugins {
 description = "Anko's Material Components helpers (snackbar) on AndroidX: replaces anko-design"
 
 android {
-    namespace = "org.jetbrains.anko.design"
+    namespace = "org.jetbrains.anko.generated.design"
 }
 
 dependencies {

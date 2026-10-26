@@ -5,7 +5,7 @@ plugins {
 description = "Anko's CardView DSL on AndroidX: replaces anko-cardview-v7"
 
 android {
-    namespace = "org.jetbrains.anko.cardview.v7"
+    namespace = "org.jetbrains.anko.generated.cardviewV7"
 }
 
 dependencies {

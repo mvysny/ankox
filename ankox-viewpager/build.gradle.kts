@@ -5,7 +5,7 @@ plugins {
 description = "Anko's ViewPager DSL on AndroidX: replaces anko-support-v4"
 
 android {
-    namespace = "org.jetbrains.anko.support.v4"
+    namespace = "org.jetbrains.anko.generated.supportV4"
 }
 
 dependencies {
