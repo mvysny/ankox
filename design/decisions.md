@@ -26,3 +26,16 @@ three maintenance-only apps, and Compose 1.10 needs minSdk 23. Why not Splitties
 API, so a rewrite too, and dormant since 2021. Why not our own packages: every import in three
 apps rewritten for nothing. The cost we carry: the classes clash with the original
 `org.jetbrains.anko:*` artifacts, so an app drops all of them at once.
+
+## D_module_per_dependency — Why a module per AndroidX library at its lowest version rather than one artifact?
+
+A DSL shouldn't choose an app's dependencies. One artifact would carry every AndroidX library
+any declaration needs, so every app would get Material for one `snackbar()`, and each library
+grown in later would land in all of them. So the core `ankox` needs no AndroidX at runtime, and
+each library gets a module holding its DSL, the library in `api` at the lowest version that
+compiles: Gradle picks the highest version asked for, so a low floor never moves an app up.
+Anko split the same way, so an app swaps its dependency lines one for one. Why not one artifact
+with `compileOnly` libraries: a forgotten library then fails at runtime, inside an inlined body,
+or in R8's missing-class check unless we ship `-dontwarn` rules; the POM no longer tells the app
+what it needs; and the compile-time floor stays anyway. The cost we carry: a module per library
+and five artifacts per release, which `buildSrc`'s convention plugin keeps to a few lines each.

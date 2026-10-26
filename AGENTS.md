@@ -11,7 +11,7 @@ compile unchanged. Anko defines the API; Ankox owns the AndroidX port and keeps 
 
 - **Drop-in for Anko 0.10.8.** Anko's packages, names and JVM file names: an app swaps the dependency and its sources compile unchanged.
 - **AndroidX only.** No support library, no Jetifier, in us or in anything we depend on.
-- **Old devices are first-class.** minSdk 21; every dependency at the newest version still at minSdk 21.
+- **Old devices are first-class.** minSdk 21, and every dependency declared at the lowest version that works, so the app picks its own.
 
 ## Design docs
 
@@ -30,27 +30,28 @@ Every fact lives in exactly one of these; the others link to it.
 ## Invariants
 
 - **Every declaration keeps Anko's package, name, signature and `@file:JvmName`.** A rename breaks the apps' sources, and a JVM name breaks their Java callers (`DimensionsKt`). See `D_anko_fork`.
-- **A dependency bump keeps minSdk 21.** This build doesn't check it; the consuming app's manifest merger fails instead.
+- **The core module `ankox` depends on no AndroidX library at runtime**; one that needs a library goes to that library's module. See `D_module_per_dependency`.
+- **A dependency's version is the lowest that compiles and supports minSdk 21.** A newer one forces every app up; this build doesn't check minSdk, the app's manifest merger does.
 
 ## Module map
 
-- `org.jetbrains.anko` — Anko's commons (dialogs, intents, dimensions, async) and the framework-widget DSL of `anko-sdk15`.
-- `org.jetbrains.anko.recyclerview.v7`, `.cardview.v7`, `.support.v4`, `.design` — the DSL for AndroidX widgets, in the packages of the Anko modules they replace.
-- `org.jetbrains.anko.sdk15.listeners`, `.custom`, `.internals` — Anko's listener helpers, custom-view hooks and internals.
+- `ankox` — `org.jetbrains.anko` (commons, the framework-widget DSL of `anko-sdk15`), `.sdk15.listeners`, `.custom`, `.internals`.
+- `ankox-recyclerview`, `ankox-cardview`, `ankox-viewpager`, `ankox-design` — one per AndroidX library, in the packages of the Anko modules they replace.
+- `buildSrc` — `ankox.library`, the convention plugin every module applies: Android setup and publishing.
 
 ## Conventions
 
 - **Grows by need.** A declaration an app lacks is copied from Anko 0.10.8's sources and ported, never written anew.
 - **Every file keeps its "Derived from Anko 0.10.8" header**, which Apache-2.0 requires of a modified file.
 - **Kotlin, Java 17 bytecode, Kotlin 2.4**: a consuming app needs Kotlin 2.3+.
-- **One artifact**, `com.github.mvysny.ankox:ankox`, with every AndroidX dependency in its `api`.
+- **A module per AndroidX library**, `com.github.mvysny.ankox:ankox-<library>`, its library in `api`; all release together under one version.
 - **A change a library user notices gets its `CHANGELOG.md` line in the same commit**, under the unreleased version.
 
 ## Commands
 
 - **Run Gradle through `mise exec -- ./gradlew …`**: `mise.toml` pins JetBrains JDK 17.
 - `./gradlew` — `clean build`: compile, lint, then `design/verify_design_tripwires.sh` via `check`; what CI runs on push on JDK 17 (`.github/workflows/gradle.yml`).
-- `./gradlew publishToMavenLocal` — install the snapshot into `~/.m2` for the apps to try.
+- `./gradlew publishToMavenLocal` — install every module's snapshot into `~/.m2` for the apps to try.
 
 ## Maintenance of this file
 
