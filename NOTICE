@@ -1,0 +1,9 @@
+Ankox
+Copyright 2026 Martin Vysny
+
+This product is derived from Anko 0.10.8 (https://github.com/Kotlin/anko),
+Copyright 2016 JetBrains s.r.o., licensed under the Apache License, Version 2.0.
+Its sources were trimmed and ported from the Android support library to AndroidX;
+each derived file says so in its header. Ankox is not affiliated with or endorsed
+by JetBrains; it keeps Anko's org.jetbrains.anko packages only for source
+compatibility with apps written against Anko.
