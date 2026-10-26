@@ -7,8 +7,18 @@
 @file:JvmName("Sdk15ServicesKt")
 package org.jetbrains.anko
 
+import android.app.ActivityManager
+import android.app.NotificationManager
 import android.content.Context
 import android.view.WindowManager
+
+/** Returns the ActivityManager instance. **/
+val Context.activityManager: ActivityManager
+    get() = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+/** Returns the NotificationManager instance. **/
+val Context.notificationManager: NotificationManager
+    get() = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 /** Returns the AccessibilityManager instance. **/
 val Context.windowManager: WindowManager
