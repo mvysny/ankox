@@ -3,7 +3,7 @@
 To release the library to Maven Central:
 
 1. Edit the root `build.gradle.kts` and remove `-SNAPSHOT` in the `version =` stanza, e.g. "0.1"
-2. Edit `README.md`: bump the version in the dependency under "Using with your project" to match the release.
+2. Edit `README.md`: bump the version in the dependencies under "Using with your project" to match the release.
    Edit `CHANGELOG.md`: replace "unreleased" in the release's heading with today's date, e.g. `## 0.1 — 2026-10-26`
 3. Run `./gradlew clean build publish closeAndReleaseStagingRepositories`.
 4. (Optional) watch [Maven Central Publishing Deployments](https://central.sonatype.com/publishing/deployments) as the deployment is published.

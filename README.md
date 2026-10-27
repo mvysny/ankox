@@ -1,5 +1,7 @@
 # Ankox: Anko on AndroidX
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.mvysny.ankox/ankox?label=ankox)](https://central.sonatype.com/artifact/com.github.mvysny.ankox/ankox)
+
 Ankox is the Kotlin DSL of [Anko](https://github.com/Kotlin/anko) 0.10.8, ported from the
 Android support library to AndroidX, so that apps built on Anko run without Jetifier, which
 AGP 10 removes. It keeps Anko's packages and names: an app swaps the dependency and its sources
@@ -11,15 +13,15 @@ and grows when one needs more.
 
 ## Using with your project
 
-Ankox isn't on Maven Central yet. Build it and install it into your local Maven repository:
+Ankox is on Maven Central, which an Android app already lists next to `google()`. Replace the
+`org.jetbrains.anko:*` dependencies with their Ankox modules, all of the same version:
 
-```sh
-./gradlew publishToMavenLocal
+```kotlin
+dependencies {
+    implementation("com.github.mvysny.ankox:ankox:0.1")
+    implementation("com.github.mvysny.ankox:ankox-recyclerview:0.1")
+}
 ```
-
-then add `mavenLocal()` to your app's repositories, and replace the `org.jetbrains.anko:*`
-dependencies with their Ankox modules, all of the same version, e.g.
-`implementation "com.github.mvysny.ankox:ankox:0.1-SNAPSHOT"`:
 
 | Anko 0.10.8 | Ankox | Brings in |
 |---|---|---|
@@ -60,7 +62,9 @@ class MainActivity : AppCompatActivity() {
 ./gradlew
 ```
 
-builds the library and runs lint and the checks. Releasing: see [RELEASING.md](RELEASING.md).
+builds the library and runs lint and the checks. `./gradlew publishToMavenLocal` installs the
+snapshot into your local Maven repository; add `mavenLocal()` to an app's repositories to try it.
+Releasing: see [RELEASING.md](RELEASING.md).
 
 # License
 
