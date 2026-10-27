@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
     // The coverage report of every module, in the root's `koverHtmlReport`.
-    subprojects.forEach { kover(it) }
+    subprojects.forEach { kover(project(it.path)) }
 }
 
 defaultTasks("clean", "build")
