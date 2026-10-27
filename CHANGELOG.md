@@ -2,7 +2,7 @@
 
 What a user of the previous release notices, newest release first.
 
-## 0.1 — unreleased
+## 0.1 — 2026-10-27
 
 - The first release: the parts of Anko 0.10.8 that PhotoCloud, Aedict and Aedict Reader use, on
   AndroidX. Compared to Anko, `org.jetbrains.anko.*` widgets extend the AndroidX classes, e.g.
