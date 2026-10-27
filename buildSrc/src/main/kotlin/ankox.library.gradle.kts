@@ -62,12 +62,14 @@ kotlin {
     }
 }
 
+// A precompiled script plugin gets no `libs` accessor; the catalog is looked up by name instead.
+val libs = versionCatalogs.named("libs")
+
 dependencies {
-    // Robolectric runs the Android framework on the JVM: unit tests, no emulator. 4.15 is the
-    // last to run our minSdk 21; 4.16 dropped it.
-    "testImplementation"("junit:junit:4.13.2")
-    "testImplementation"("org.jetbrains.kotlin:kotlin-test-junit")
-    "testImplementation"("org.robolectric:robolectric:4.15.1")
+    // Robolectric runs the Android framework on the JVM: unit tests, no emulator.
+    "testImplementation"(libs.findLibrary("junit").get())
+    "testImplementation"(libs.findLibrary("kotlin-test-junit").get())
+    "testImplementation"(libs.findLibrary("robolectric").get())
 }
 
 publishing {

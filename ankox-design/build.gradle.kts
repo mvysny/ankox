@@ -10,5 +10,5 @@ android {
 
 dependencies {
     api(project(":ankox"))
-    api("com.google.android.material:material:1.0.0")
+    api(libs.material)
 }

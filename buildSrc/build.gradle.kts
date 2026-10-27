@@ -9,9 +9,9 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:9.4.1")
+    implementation(libs.android.gradlePlugin)
     // AGP 9 compiles Kotlin itself, with the Kotlin it depends on; this line puts our newer one
     // on the classpath instead.
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.21")
-    implementation("org.jetbrains.kotlinx:kover-gradle-plugin:0.9.11")
+    implementation(libs.kotlin.gradlePlugin)
+    implementation(libs.kover.gradlePlugin)
 }

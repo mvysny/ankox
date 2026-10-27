@@ -1,0 +1,40 @@
+# Every version in the build. A library a module publishes against is at the lowest version that
+# compiles and supports minSdk 21, never the newest (D_module_per_dependency).
+
+[versions]
+agp = "9.4.1"
+kotlin = "2.4.21"
+kover = "0.9.11"
+nexus-publish = "2.0.0"
+androidx-annotation = "1.0.1"
+androidx-cardview = "1.0.0"
+androidx-drawerlayout = "1.0.0"
+androidx-recyclerview = "1.0.0"
+androidx-swiperefreshlayout = "1.0.0"
+androidx-viewpager = "1.0.0"
+material = "1.0.0"
+junit = "4.13.2"
+# The last to run our minSdk 21; 4.16 dropped it.
+robolectric = "4.15.1"
+
+[libraries]
+# buildSrc's classpath: the plugins the convention plugin applies.
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kover-gradlePlugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
+
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
+androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "androidx-cardview" }
+androidx-drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "androidx-drawerlayout" }
+androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
+androidx-viewpager = { module = "androidx.viewpager:viewpager", version.ref = "androidx-viewpager" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
+junit = { module = "junit:junit", version.ref = "junit" }
+# Versioned by the Kotlin Gradle plugin.
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+
+[plugins]
+nexus-publish = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexus-publish" }

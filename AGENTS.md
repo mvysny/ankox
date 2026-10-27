@@ -46,6 +46,7 @@ Every fact lives in exactly one of these; the others link to it.
 - **Grows by need.** A declaration an app lacks is copied from Anko 0.10.8's sources and ported, never written anew.
 - **Every file keeps its "Derived from Anko 0.10.8" header**, which Apache-2.0 requires of a modified file.
 - **Kotlin, Java 17 bytecode, Kotlin 2.4**: a consuming app needs Kotlin 2.3+.
+- **Every version and dependency lives in `gradle/libs.versions.toml`**, buildSrc's included; a build script names only its catalog entry.
 - **A module per AndroidX library**, `com.github.mvysny.ankox:ankox-<library>`, its library in `api`; all release together under one version.
 - **A change a library user notices gets its `CHANGELOG.md` line in the same commit**, under the unreleased version.
 - **Tests are JVM unit tests under Robolectric, never an emulator**, each run on SDK 21 and 35 (`buildSrc/src/robolectric/robolectric.properties`); only the debug variant's.

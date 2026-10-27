@@ -10,5 +10,5 @@ android {
 
 dependencies {
     api(project(":ankox"))
-    api("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+    api(libs.androidx.swiperefreshlayout)
 }

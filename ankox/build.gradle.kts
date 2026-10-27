@@ -10,5 +10,5 @@ android {
 
 dependencies {
     // Annotations only, which nothing needs at runtime.
-    compileOnly("androidx.annotation:annotation:1.0.1")
+    compileOnly(libs.androidx.annotation)
 }

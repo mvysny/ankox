@@ -1,6 +1,6 @@
 plugins {
     base
-    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
+    alias(libs.plugins.nexus.publish)
     id("org.jetbrains.kotlinx.kover")
 }
 
