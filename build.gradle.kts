@@ -12,7 +12,7 @@ dependencies {
 defaultTasks("clean", "build")
 
 group = "com.github.mvysny.ankox"
-version = "0.1"
+version = "0.2-SNAPSHOT"
 
 nexusPublishing {
     repositories {
